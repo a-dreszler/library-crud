@@ -51,14 +51,10 @@ class LibraryApp {
     }
 
     private void addBook() {
-        System.out.println("Podaj isbn książki:");
-        String isbn = DataReader.readString();
-        System.out.println("Podaj tytuł książki:");
-        String title = DataReader.readString();
-        System.out.println("Podaj autora książki:");
-        String author = DataReader.readString();
-        System.out.println("Podaj rok wydania książki:");
-        int year = DataReader.readYear();
+        String isbn = requestAndGetIsbn();
+        String title = requestAndGetTitle();
+        String author = requestAndGetAuthor();
+        int year = requestAndGetYear();
         Book book = new Book(title, author, year, isbn);
         boolean wasSaved = libraryDao.librarySave(book);
         if (wasSaved) {
@@ -70,8 +66,7 @@ class LibraryApp {
     }
 
     private void readBook() {
-        System.out.println("Podaj isbn książki:");
-        String isbn = DataReader.readString();
+        String isbn = requestAndGetIsbn();
         Optional<Book> bookOptional = libraryDao.libraryRead(isbn);
         bookOptional.ifPresentOrElse(
                 book -> {
@@ -83,8 +78,7 @@ class LibraryApp {
     }
 
     private void updateBook() {
-        System.out.println("Podaj isbn książki:");
-        String isbn = DataReader.readString();
+        String isbn = requestAndGetIsbn();
         Optional<Book> bookOptional = libraryDao.libraryRead(isbn);
         bookOptional.ifPresentOrElse(
                 this::updateLoop,
@@ -106,23 +100,19 @@ class LibraryApp {
     private void executeUpdate(Book originalBook, Book book, UpdateOption updateOption) {
         switch (updateOption) {
             case UPDATE_ISBN -> {
-                System.out.println("Podaj nowy ISBN");
-                String isbn = DataReader.readString();
+                String isbn = requestAndGetIsbn();
                 book.setIsbn(isbn);
             }
             case UPDATE_TITLE -> {
-                System.out.println("Podaj nowy tytuł:");
-                String title = DataReader.readString();
+                String title = requestAndGetTitle();
                 book.setTitle(title);
             }
             case UPDATE_AUTHOR -> {
-                System.out.println("Podaj nowego autora:");
-                String author = DataReader.readString();
+                String author = requestAndGetAuthor();
                 book.setAuthor(author);
             }
             case UPDATE_YEAR -> {
-                System.out.println("Podaj nowy rok wydania:");
-                int year = DataReader.readYear();
+                int year = requestAndGetYear();
                 book.setYear(year);
             }
             case APPLY_CHANGES -> applyChanges(book, originalBook);
@@ -190,5 +180,25 @@ class LibraryApp {
         for (UpdateOption updateOption : UpdateOption.values()) {
             System.out.println(updateOption);
         }
+    }
+
+    private String requestAndGetIsbn() {
+        System.out.println("Podaj ISBN:");
+        return DataReader.readString();
+    }
+
+    private String requestAndGetTitle() {
+        System.out.println("Podaj nowy tytuł:");
+        return DataReader.readString();
+    }
+
+    private String requestAndGetAuthor() {
+        System.out.println("Podaj autora:");
+        return DataReader.readString();
+    }
+
+    private int requestAndGetYear() {
+        System.out.println("Podaj rok wydania:");
+        return DataReader.readYear();
     }
 }
