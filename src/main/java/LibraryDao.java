@@ -88,28 +88,6 @@ class LibraryDao {
         return 0;
     }
 
-//    Optional<Integer> getIdByIsbn(String isbn) {
-//        final String sql = """
-//                SELECT
-//                    id
-//                FROM
-//                    book
-//                WHERE
-//                    isbn = ?
-//                """;
-//        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//            statement.setString(1, isbn);
-//            ResultSet resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                return Optional.of(resultSet.getInt("id"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Nie udało się uzyskać id książki:\n" + e.getMessage());
-//        }
-//
-//        return Optional.empty();
-//    }
-
     int libraryDelete(int id) {
         final String sql = """
                 DELETE FROM book WHERE id = ?
