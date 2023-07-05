@@ -1,6 +1,5 @@
 class Book {
 
-    private Integer id;
     private String title;
     private String author;
     private Integer year;
@@ -11,19 +10,6 @@ class Book {
         this.author = author;
         this.year = year;
         this.isbn = isbn;
-    }
-
-    public Book(Integer id, String title, String author, Integer year, String isbn) {
-        this(title, author, year, isbn);
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitle() {
